@@ -33,11 +33,9 @@ def create_notebook():
 ---
 ## Taller Integrador: Grey Wolf Optimizer (GWO)
 * **Docente:** Andrés Felipe Hernández Marulanda  
-* **Integrantes:**  
-  1. `______________________`  
-  2. `______________________`  
+* **Estudiante:** Miguel Ángel Mejía López  
 * **Fecha:** `2026-10-14`  
-* **Entrega:** `GWO_Apellido1_Apellido2.ipynb`  
+* **Entrega:** `GWO_Mejia_Lopez.ipynb`  
 * **Duración:** 120 minutos | Google Colab, NumPy y Matplotlib  
 
 ---
@@ -618,10 +616,13 @@ print(f"Minimo alcanzado en Himmelblau: {trayectoria_alpha[-1]} con f = {himmelb
 
     output_dir = "notebooks"
     os.makedirs(output_dir, exist_ok=True)
-    nb_path = os.path.join(output_dir, "GWO_Apellido1_Apellido2.ipynb")
-    with open(nb_path, "w", encoding="utf-8") as f:
+    nb_path_student = os.path.join(output_dir, "GWO_Mejia_Lopez.ipynb")
+    nb_path_orig = os.path.join(output_dir, "GWO_Apellido1_Apellido2.ipynb")
+    with open(nb_path_student, "w", encoding="utf-8") as f:
         json.dump(nb_data, f, indent=2, ensure_ascii=False)
-    print(f"Jupyter Notebook generado con exito en: {nb_path}")
+    with open(nb_path_orig, "w", encoding="utf-8") as f:
+        json.dump(nb_data, f, indent=2, ensure_ascii=False)
+    print(f"Jupyter Notebook generado con exito en: {nb_path_student} y {nb_path_orig}")
 
 if __name__ == "__main__":
     create_notebook()

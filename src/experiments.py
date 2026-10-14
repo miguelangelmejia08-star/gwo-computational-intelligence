@@ -4,6 +4,13 @@ Facultad de Ingenierias | Inteligencia Computacional
 Modulo de Campana Experimental y Benchmark (Secciones 4 y 5)
 """
 import os
+import sys
+
+# Asegurar que la raiz del proyecto este siempre en sys.path
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if BASE_DIR not in sys.path:
+    sys.path.insert(0, BASE_DIR)
+
 import numpy as np
 import matplotlib.pyplot as plt
 from src.objectives import sphere, rastrigin
@@ -69,14 +76,14 @@ def run_campaign(output_dir="reports"):
 
     # Imprimir Tabla de la Seccion 4
     print("\nTABLA DE RESULTADOS - CAMPANA EXPERIMENTAL GWO")
-    print("| Funcion | a(t) | Media final | Desv. est. | Mejor final | Evals/corrida | Tasa Exito (<1e-3) |")
-    print("|---|---|---|---|---|---|---|")
+    print("| Funcion   | a(t)       | Media final | Desv. est. | Mejor final | Evals/corrida | Tasa Exito (<1e-3) |")
+    print("|-----------|------------|-------------|------------|-------------|---------------|---------------------|")
     for (f_nombre, _) in funciones:
         for modo in modos:
             clave = f"{f_nombre}_{modo}"
             res = resultados[clave]
             tasa_str = f"{res['tasa_exito']*100:.1f}%" if not np.isnan(res['tasa_exito']) else "N/A"
-            print(f"| {f_nombre:<9} | {modo.capitalize():<10} | {res['media']:<11.4e} | {res['std']:<10.4e} | {res['mejor']:<11.4e} | {res['evals']:<13} | {tasa_str:<18} |")
+            print(f"| {f_nombre:<9} | {modo.capitalize():<10} | {res['media']:<11.4e} | {res['std']:<10.4e} | {res['mejor']:<11.4e} | {res['evals']:<13} | {tasa_str:<19} |")
 
     # Grafica de Convergencia GWO (Sphere y Rastrigin)
     fig, axes = plt.subplots(1, 2, figsize=(14, 5))
@@ -134,10 +141,10 @@ def run_campaign(output_dir="reports"):
     gwo_res = resultados["Rastrigin_lineal"]
 
     print("\nTABLA COMPARATIVA: GWO (Lineal) vs PSO en Rastrigin (d=10, 2020 evaluaciones)")
-    print("| Algoritmo | Media final | Desv. est. | Mejor final | Evaluaciones |")
-    print("|---|---|---|---|---|")
-    print(f"| GWO (Lineal) | {gwo_res['media']:<11.4e} | {gwo_res['std']:<10.4e} | {gwo_res['mejor']:<11.4e} | {gwo_res['evals']} |")
-    print(f"| PSO          | {pso_media:<11.4e} | {pso_std:<10.4e} | {pso_mejor:<11.4e} | {2020} |")
+    print("| Algoritmo    | Media final | Desv. est. | Mejor final | Evaluaciones |")
+    print("|--------------|-------------|------------|-------------|--------------|")
+    print(f"| GWO (Lineal) | {gwo_res['media']:<11.4e} | {gwo_res['std']:<10.4e} | {gwo_res['mejor']:<11.4e} | {gwo_res['evals']}         |")
+    print(f"| PSO          | {pso_media:<11.4e} | {pso_std:<10.4e} | {pso_mejor:<11.4e} | {2020}         |")
 
     # Grafica Comparativa GWO vs PSO
     pso_promedio = np.mean(pso_historiales, axis=0)
@@ -163,4 +170,3 @@ def run_campaign(output_dir="reports"):
 
 if __name__ == "__main__":
     run_campaign()
-

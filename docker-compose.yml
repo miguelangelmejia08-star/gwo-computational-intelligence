@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  # Servicio 1: Ejecucion de pruebas unitarias y deterministas
+  tests:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: gwo_tests
+    command: pytest -v tests/
+    volumes:
+      - .:/app
+    environment:
+      - PYTHONPATH=/app
+
+  # Servicio 2: Ejecucion de campana experimental y generacion de reportes/graficas
+  experiments:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: gwo_experiments
+    command: python src/experiments.py
+    volumes:
+      - ./reports:/app/reports
+    environment:
+      - PYTHONPATH=/app
+
+  # Servicio 3: Servidor interactivo Jupyter Notebook
+  jupyter:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: gwo_jupyter
+    command: jupyter notebook --ip=0.0.0.0 --port=8888 --no-browser --allow-root --NotebookApp.token='' --NotebookApp.password=''
+    ports:
+      - "8888:8888"
+    volumes:
+      - .:/app
+    environment:
+      - PYTHONPATH=/app
+

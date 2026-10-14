@@ -8,6 +8,14 @@ Pruebas automaticas minimas requeridas por la rubrica del Taller Integrador GWO:
 6. Todas las posiciones dentro de limites [lb, ub]
 7. Validacion de excepciones para parametros no validos
 """
+import sys
+from pathlib import Path
+
+# Asegurar que el directorio raiz del proyecto este en sys.path
+ROOT_DIR = Path(__file__).resolve().parent.parent
+if str(ROOT_DIR) not in sys.path:
+    sys.path.insert(0, str(ROOT_DIR))
+
 import numpy as np
 import pytest
 from src.gwo import gwo
@@ -72,4 +80,11 @@ def test_gwo_validaciones_parametros():
         gwo(sphere, lb=5.0, ub=-5.0)  # lb >= ub
     with pytest.raises(ValueError):
         gwo(sphere, modo='invalido')  # Modo no soportado
+
+
+if __name__ == "__main__":
+    import sys
+    from pathlib import Path
+    sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+    pytest.main(["-v", __file__])
 

@@ -2,6 +2,14 @@
 Prueba de verificacion determinista - Seccion 2 del Taller Integrador GWO
 Desafio manual: W5 = (3, 3) con los valores exactos especificados.
 """
+import sys
+from pathlib import Path
+
+# Asegurar que el directorio raiz del proyecto este en sys.path
+ROOT_DIR = Path(__file__).resolve().parent.parent
+if str(ROOT_DIR) not in sys.path:
+    sys.path.insert(0, str(ROOT_DIR))
+
 import numpy as np
 import pytest
 from src.gwo import update_one_wolf
@@ -62,4 +70,11 @@ def test_desafio_manual_w5_determinista():
     assert f_nuevo < sphere(w5), "W5 debe mejorar su posicion anterior"
     # d) Supero al alpha actual? f(alpha) = 0.5 -> nuevo = 0.292 < 0.5. Si, lo supero.
     assert f_nuevo < sphere(lider_alpha), "W5 nuevo debe superar al lider alfa actual"
+
+
+if __name__ == "__main__":
+    import sys
+    from pathlib import Path
+    sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+    pytest.main(["-v", __file__])
 
